@@ -240,12 +240,14 @@ Uji validitas dilakukan untuk memastikan setiap item pertanyaan dalam kuesioner 
 | P8   | 0.615    | 0.266   | Valid      |
 | P9   | 0.791    | 0.266   | Valid      |
 | P10  | 0.794    | 0.266   | Valid      |
+
 Seluruh 10 item pertanyaan dinyatakan valid karena nilai r hitung lebih besar dari r tabel (0.266).
 ### Uji Reliabilitas
 Uji reliabilitas dilakukan menggunakan metode Cronbach's Alpha untuk mengukur konsistensi instrumen penelitian. Instrumen dinyatakan reliabel jika nilai alpha lebih besar atau sama dengan 0.6.
 | Cronbach's Alpha | N of Items | Keterangan      |
 |------------------|------------|-----------------|
 | 0.924            | 10         | Sangat Reliabel |
+
 Instrumen penelitian dinyatakan sangat reliabel dengan nilai Cronbach's Alpha sebesar 0.924, jauh di atas ambang batas minimum 0.6.
 ### Analisis Deskriptif 
 Analisis deskriptif digunakan untuk memperoleh gambaran umum mengenai karakteristik responden yang terlibat dalam survei. Pada penelitian ini, karakteristik yang ditinjau meliputi program studi, semester, serta intensitas penggunaan website BERAJAH.
@@ -259,6 +261,7 @@ Analisis deskriptif digunakan untuk memperoleh gambaran umum mengenai karakteris
 | Matematika      | 7         | 12.3%      |
 | Statistika      | 23        | 40.4%      |
 | Total           | 57        | 100%       |
+
 Dari keseluruhan 57 responden, Program Studi Statistika mendominasi dengan jumlah 23 mahasiswa atau sekitar 40.4% dari total responden. Sementara itu, Program Studi Fisika dan Kimia menjadi yang paling sedikit dengan masing-masing hanya 5 responden (8.8%).
 #### Semester 
 | Semester   | Frekuensi | Persentase |
@@ -266,6 +269,7 @@ Dari keseluruhan 57 responden, Program Studi Statistika mendominasi dengan jumla
 | Semester 4 | 37        | 64.9%      |
 | Semester 6 | 20        | 35.1%      |
 | Total      | 57        | 100%       |
+
 Ditinjau dari semester, lebih dari separuh responden merupakan mahasiswa Semester 4 yakni sebanyak 37 orang (64.9%), sedangkan mahasiswa Semester 6 berjumlah 20 orang (35.1%).
 #### Frekuensi Penggunaan Website Berajah 
 | Frekuensi Penggunaan | Jumlah | Persentase |
@@ -275,6 +279,7 @@ Ditinjau dari semester, lebih dari separuh responden merupakan mahasiswa Semeste
 | Sangat Sering        | 4      | 7.0%       |
 | Sering               | 17     | 29.8%      |
 | Total                | 57     | 100%       |
+
 Terkait intensitas penggunaan, hampir setengah dari responden mengaku menggunakan website BERAJAH secara kadang-kadang (49.1%). Responden yang menggunakannya secara sering tercatat sebanyak 17 orang (29.8%), diikuti jarang 8 orang (14.0%), dan sangat sering hanya 4 orang (7.0%).
 ### PIE-CHART DISTRIBUSI RESPONDEN
 #### Distribusi Responden per Program Studi
