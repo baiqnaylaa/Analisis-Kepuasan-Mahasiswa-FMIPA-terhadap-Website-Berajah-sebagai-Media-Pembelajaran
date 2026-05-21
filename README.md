@@ -90,62 +90,67 @@ if (hasil_alpha$total$raw_alpha >= 0.8) {
 ```
 
 ### 7. Analisis Deskriptif 
-Analisis deskriptif dilakukan untuk mengetahui distribusi responden berdasarkan program studi, semester, dan frekuensi penggunaan website BERAJAH. Fungsi `table()` digunakan untuk menghitung jumlah responden pada setiap kategori, sedangkan `prop.table()` digunakan untuk menghitung persentasenya.
+Analisis deskriptif dilakukan untuk mengetahui distribusi responden berdasarkan program studi, semester, dan frekuensi penggunaan website BERAJAH. Tahap ini menyajikan distribusi responden berdasarkan program studi, semester, dan frekuensi penggunaan website BERAJAH. Fungsi `table()` digunakan untuk menghitung frekuensi dan `prop.table()` untuk menghitung persentasenya.
 ```r
-item$Total <- NULL
+freq_prodi            <- as.data.frame(table(data$Prodi))
+freq_prodi$Persentase <- paste0(round(freq_prodi$Freq / nrow(data) * 100, 1), "%")
+colnames(freq_prodi)  <- c("Program Studi", "Frekuensi", "Persentase")
+print(freq_prodi)
 
-table(data$Prodi)
-prop.table(table(data$Prodi)) * 100
+freq_semester            <- as.data.frame(table(data$Semester))
+freq_semester$Persentase <- paste0(round(freq_semester$Freq / nrow(data) * 100, 1), "%")
+colnames(freq_semester)  <- c("Semester", "Frekuensi", "Persentase")
+print(freq_semester)
 
-table(data$Semester)
-prop.table(table(data$Semester)) * 100
-
-table(data$Frekuensi)
-prop.table(table(data$Frekuensi)) * 100
+freq_guna            <- as.data.frame(table(data$Frekuensi))
+freq_guna$Persentase <- paste0(round(freq_guna$Freq / nrow(data) * 100, 1), "%")
+colnames(freq_guna)  <- c("Frekuensi Penggunaan", "Jumlah", "Persentase")
+print(freq_guna)
 ```
 
-### 8. Tabel Distribusi Frekuensi dan Persentase 
-Tahap ini menyajikan distribusi responden berdasarkan program studi, semester, dan frekuensi penggunaan website BERAJAH. Fungsi `table()` digunakan untuk menghitung frekuensi dan `prop.table()` untuk menghitung persentasenya.
+### 8. Pie-Chart Distribusi Responden
+Grafik lingkaran (pie chart) dibuat menggunakan fungsi ggplot() dengan coord_polar() untuk memvisualisasikan distribusi responden berdasarkan program studi, semester, dan frekuensi penggunaan website BERAJAH.
 ```r
-table(data$Prodi)
-prop.table(table(data$Prodi)) * 100
+#Program Studi
+freq_prodi_plot <- as.data.frame(table(data$Prodi))
+colnames(freq_prodi_plot) <- c("Prodi", "Jumlah")
+freq_prodi_plot$Persentase <- round(freq_prodi_plot$Jumlah / sum(freq_prodi_plot$Jumlah) * 100, 1)
+freq_prodi_plot$Label <- paste0(freq_prodi_plot$Prodi, "\n", freq_prodi_plot$Jumlah, " (", freq_prodi_plot$Persentase, "%)")
 
-table(data$Semester)
-prop.table(table(data$Semester)) * 100
+ggplot(freq_prodi_plot, aes(x = "", y = Jumlah, fill = Prodi)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  geom_text(aes(label = paste0(Jumlah, "\n(", Persentase, "%)")),
+            position = position_stack(vjust = 0.5), size = 3) +
+  labs(title = "Distribusi Responden per Program Studi", fill = "Program Studi") +
+  theme_void()
+#Semester
+freq_sem_plot <- as.data.frame(table(data$Semester))
+colnames(freq_sem_plot) <- c("Semester", "Jumlah")
+freq_sem_plot$Persentase <- round(freq_sem_plot$Jumlah / sum(freq_sem_plot$Jumlah) * 100, 1)
 
-table(data$Frekuensi)
-prop.table(table(data$Frekuensi)) * 100
+ggplot(freq_sem_plot, aes(x = "", y = Jumlah, fill = Semester)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  geom_text(aes(label = paste0(Jumlah, "\n(", Persentase, "%)")),
+            position = position_stack(vjust = 0.5), size = 3) +
+  labs(title = "Distribusi Responden per Semester", fill = "Semester") +
+  theme_void()
+#Frekuensi penggunaan berajah 
+freq_guna_plot <- as.data.frame(table(data$Frekuensi))
+colnames(freq_guna_plot) <- c("Frekuensi", "Jumlah")
+freq_guna_plot$Persentase <- round(freq_guna_plot$Jumlah / sum(freq_guna_plot$Jumlah) * 100, 1)
+
+ggplot(freq_guna_plot, aes(x = "", y = Jumlah, fill = Frekuensi)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  geom_text(aes(label = paste0(Jumlah, "\n(", Persentase, "%)")),
+            position = position_stack(vjust = 0.5), size = 3) +
+  labs(title = "Frekuensi Penggunaan Website BERAJAH", fill = "Frekuensi") +
+  theme_void()
 ```
 
-### 9. Grafik Distribusi Responden
-Grafik batang dibuat menggunakan fungsi `barplot()` untuk memvisualisasikan distribusi responden berdasarkan program studi, semester, dan frekuensi penggunaan website BERAJAH.
-```r
-barplot(
-  sort(table(data$Prodi), decreasing = TRUE),
-  main = "Distribusi Responden Berdasarkan Program Studi",
-  xlab = "Program Studi",
-  ylab = "Frekuensi",
-  col  = "lightblue"
-)
-
-barplot(
-  table(data$Semester),
-  main = "Distribusi Responden Berdasarkan Semester",
-  xlab = "Semester",
-  ylab = "Frekuensi",
-  col  = "lightgreen"
-)
-
-barplot(
-  table(data$Frekuensi),
-  main = "Distribusi Frekuensi Penggunaan Website BERAJAH",
-  xlab = "Frekuensi Penggunaan",
-  ylab = "Jumlah Responden",
-  col  = "lightyellow"
-)
-```
-
-### 10. Naive Estimation 
+### 9. Naive Estimation 
 Naive estimation digunakan untuk memperoleh estimasi awal tingkat kepuasan mahasiswa. Responden dianggap puas jika memberikan nilai lebih besar atau sama dengan 4 pada skala Likert. Proporsi dihitung dengan membagi jumlah responden yang puas dengan total responden.
 ```r
 n           <- nrow(item)
@@ -162,7 +167,7 @@ print(hasil_naive)
 print(paste("Rata-rata Naive Estimation:", paste0(round(mean(naive) * 100, 1), "%")))
 ```
 
-### 11. Weighting Sederhana 
+### 10. Weighting Sederhana 
 Weighting dilakukan untuk mengurangi bias akibat ketidakseimbangan distribusi sampel dibandingkan populasi. Bobot dihitung berdasarkan perbandingan antara proporsi populasi dan proporsi sampel per program studi.
 ```r
 pop <- c(Statistika=44, Kimia=54, Fisika=44,
@@ -194,7 +199,7 @@ weighted <- sapply(colnames(item), function(p_item) {
 })
 ```
 
-### 12. Perbandingan Naive dan Weighted Estimation 
+### 11. Perbandingan Naive dan Weighted Estimation 
 Tahap ini membandingkan hasil estimasi sebelum dan sesudah dilakukan pembobotan menggunakan tabel dan grafik batang.
 ```r
 hasil <- data.frame(
@@ -219,3 +224,57 @@ barplot(nilai,
 ```
 
 ## Hasil dan Pembahasan
+### Total Sampel Berdasarkan Rumus Slovin
+Rumus Slovin digunakan untuk menentukan jumlah sampel minimum dari populasi yang diketahui. Populasi mahasiswa FMIPA Universitas Mataram sebanyak 290 mahasiswa dengan tingkat error 12%.  Sehingga jumlah sampel minimum yang diperlukan adalah 57 responden.
+### Uji Validitas 
+Uji validitas dilakukan untuk memastikan setiap item pertanyaan dalam kuesioner mampu mengukur apa yang seharusnya diukur. Item dinyatakan valid jika nilai r hitung lebih besar dari r tabel. Untuk n = 57 dengan alpha = 0.05, r tabel = 0.266.
+| Item | r hitung | r tabel | Keterangan |
+|------|----------|---------|------------|
+| P1   | 0.862    | 0.266   | Valid      |
+| P2   | 0.735    | 0.266   | Valid      |
+| P3   | 0.817    | 0.266   | Valid      |
+| P4   | 0.776    | 0.266   | Valid      |
+| P5   | 0.824    | 0.266   | Valid      |
+| P6   | 0.807    | 0.266   | Valid      |
+| P7   | 0.724    | 0.266   | Valid      |
+| P8   | 0.615    | 0.266   | Valid      |
+| P9   | 0.791    | 0.266   | Valid      |
+| P10  | 0.794    | 0.266   | Valid      |
+Seluruh 10 item pertanyaan dinyatakan valid karena nilai r hitung lebih besar dari r tabel (0.266).
+### Uji Reliabilitas
+Uji reliabilitas dilakukan menggunakan metode Cronbach's Alpha untuk mengukur konsistensi instrumen penelitian. Instrumen dinyatakan reliabel jika nilai alpha lebih besar atau sama dengan 0.6.
+| Cronbach's Alpha | N of Items | Keterangan      |
+|------------------|------------|-----------------|
+| 0.924            | 10         | Sangat Reliabel |
+Instrumen penelitian dinyatakan sangat reliabel dengan nilai Cronbach's Alpha sebesar 0.924, jauh di atas ambang batas minimum 0.6.
+### Analisis Deskriptif 
+Analisis deskriptif digunakan untuk memperoleh gambaran umum mengenai karakteristik responden yang terlibat dalam survei. Pada penelitian ini, karakteristik yang ditinjau meliputi program studi, semester, serta intensitas penggunaan website BERAJAH.
+##### Program Studi
+| Program Studi   | Frekuensi | Persentase |
+|-----------------|-----------|------------|
+| Biologi         | 8         | 14.0%      |
+| Fisika          | 5         | 8.8%       |
+| Ilmu Lingkungan | 9         | 15.8%      |
+| Kimia           | 5         | 8.8%       |
+| Matematika      | 7         | 12.3%      |
+| Statistika      | 23        | 40.4%      |
+| Total           | 57        | 100%       |
+Dari keseluruhan 57 responden, Program Studi Statistika mendominasi dengan jumlah 23 mahasiswa atau sekitar 40.4% dari total responden. Sementara itu, Program Studi Fisika dan Kimia menjadi yang paling sedikit dengan masing-masing hanya 5 responden (8.8%).
+#### Semester 
+| Semester   | Frekuensi | Persentase |
+|------------|-----------|------------|
+| Semester 4 | 37        | 64.9%      |
+| Semester 6 | 20        | 35.1%      |
+| Total      | 57        | 100%       |
+Ditinjau dari semester, lebih dari separuh responden merupakan mahasiswa Semester 4 yakni sebanyak 37 orang (64.9%), sedangkan mahasiswa Semester 6 berjumlah 20 orang (35.1%).
+#### Frekuensi Penggunaan Website Berajah 
+| Frekuensi Penggunaan | Jumlah | Persentase |
+|----------------------|--------|------------|
+| Jarang               | 8      | 14.0%      |
+| Kadang-Kadang        | 28     | 49.1%      |
+| Sangat Sering        | 4      | 7.0%       |
+| Sering               | 17     | 29.8%      |
+| Total                | 57     | 100%       |
+Terkait intensitas penggunaan, hampir setengah dari responden mengaku menggunakan website BERAJAH secara kadang-kadang (49.1%). Responden yang menggunakannya secara sering tercatat sebanyak 17 orang (29.8%), diikuti jarang 8 orang (14.0%), dan sangat sering hanya 4 orang (7.0%).
+### PIE-CHART DISTRIBUSI RESPONDEN
+
